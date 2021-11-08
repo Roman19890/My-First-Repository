@@ -1,0 +1,108 @@
+
+//Comparator
+import java.util.Comparator;
+
+public class StringComparator implements Comparator<String>
+{
+    @Override
+    public int compare(String x, String y)
+    {
+        return 0;
+    }
+}
+
+
+//class Client
+import java.util.Date;
+
+public class Client implements Comparable<Client> {
+
+    int priority;
+    String name;
+    Date time;
+
+    public Client(int priority, String name) {
+        this.priority = priority;
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Client " +
+                ", name='" + name + '\'' +
+                ", time=" + time;
+    }
+
+    @Override
+    public int compareTo(Client o) {
+        return Integer.compare(this.priority, o.priority);
+    }
+}
+
+
+import java.util.*;
+
+public class Solution {
+    public static void main(String[] args) {
+
+        Scanner scanner = new Scanner(System.in);
+        Client client1 = new Client(1, "client1");
+        Client client2 = new Client(2, "client2");
+        Client client3 = new Client(3, "client3");
+
+        //Чтобы выводить запросы в порядке их добавления в очередь
+        StringComparator comparator = new StringComparator();
+
+        PriorityQueue<Client> queue = new PriorityQueue<Client>();
+        PriorityQueue<String> StatQueue = new PriorityQueue<String>(comparator);
+
+        int num = 1;
+        int client = 1;
+
+        while (num != 0) {
+
+            System.out.println(" 1.  Send request;\n" +
+                    " 2.  Show statistic;\n");
+
+            num = scanner.nextInt();
+
+            switch (num) {
+
+                case 1:
+                    client = scanner.nextInt();
+                    switch (client) {
+                        case 1:
+                            client1.time = new Date();
+                            queue.add(client1);
+                            StatQueue.add("Client " + client1.name + "  " + client1.time);
+                            break;
+                        case 2:
+                            client2.time = new Date();
+                            queue.add(client2);
+                            StatQueue.add("Client " + client2.name + "  " + client2.time);
+                            break;
+                        case 3:
+                            client3.time = new Date();
+                            queue.add(client3);
+                            StatQueue.add("Client " + client3.name + "  " + client3.time);
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+
+                case 2:
+
+                    Iterator<String> iter = StatQueue.iterator();
+
+                    while(iter.hasNext())
+                    {
+                        System.out.println(iter.next());
+                    }
+
+                default:
+                    break;
+            }
+        }
+    }
+}
